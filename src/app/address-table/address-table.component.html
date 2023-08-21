@@ -1,0 +1,18 @@
+<div class="addresses-table">
+    <h4 class="section-heading">Contacts</h4>
+
+    <!-- <div class="address-container" *ngIf = "storage!=null && storage.length">
+            <app-address-row [data]="d" *ngFor="let d of storage let last = last "[ngClass]="{'last-child': last} "></app-address-row>  
+    </div> -->
+    <ul class="address-container" *ngIf = "storage!=null && storage.length">
+        <li *ngFor="let d of storage let last = last "[ngClass]="{'last-child': last} ">
+            <app-address-row [data]="d" ></app-address-row>  
+        </li>
+    </ul>
+
+    <div class="error-display" *ngIf = "storage === null || !storage.length">
+        <h4>No Contacts to display, Add contacts to view here:)</h4>
+        <a routerLink="add">Add Contacts</a>
+    </div>
+    
+</div>

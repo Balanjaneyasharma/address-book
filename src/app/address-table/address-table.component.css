@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200&display=swap');
+.section-heading{
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.address-container{
+    margin:0px;
+    margin-top: 10px;
+    list-style: none;
+    padding: 0px;
+    /* min-height: 65px; */
+    border: 1px solid #C8C8C8;
+    width: 308px;
+}
+.error-display{
+    width: 308px;
+}
+.error-display h4{
+    margin: 10px 0px;
+    font-weight: 400;
+    font-size: 13px;
+}
+.error-display a{
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px ;
+    font-size: 13px;
+    text-align: center;
+    background-color : whitesmoke;
+    border-radius: 2px;
+    color: black;
+}

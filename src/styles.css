@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    width: 100vw;
+    font-family: sans-serif;
+    
+}
+
+.last-child  a{
+    border-bottom: none !important;
+}

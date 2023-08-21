@@ -1,0 +1,53 @@
+.address-name{
+    font-size: 23px;
+    font-weight: 100;
+    margin-top: 0px;
+    text-transform: capitalize;
+}
+.address-contact{
+    font-size: 11px;
+    padding-left: 3px;
+}
+.address-details{
+    margin-top: 35px;
+    margin-left: 72px;
+    display: flex;
+    justify-content: space-between;
+}
+.address-span{
+    display: inline-block;
+    width: 20%;
+    text-transform: capitalize;
+}
+.address-details > div > p,div{
+    font-size: 13px;
+}
+.buttons-container{
+    margin-left: 100px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.update-button{
+    border: none;
+    background-color: white;
+    margin-right: 35px;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.edit-icon{
+    height: 20px;
+    width: 13px;
+}
+.address-flex{
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+}
+.button-text{
+    padding-left: 9px;
+    text-transform: uppercase;
+}

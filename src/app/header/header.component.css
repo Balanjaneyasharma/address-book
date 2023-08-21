@@ -1,0 +1,47 @@
+.page-header {
+    background-color: #3399CC;
+}
+.page-header-title{
+    font-family: "Century Gothic";
+    padding-top: 14px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    color: white;
+    font-size: 2.7rem;
+    font-weight: 500;
+}
+.page-navbar{
+    background-color: #333333;
+    padding: 5px 0px;
+}
+.page-navbar-list{
+    margin: 0px;
+    padding: 0px 5px;
+    list-style: none;
+}
+.page-navbar-list .page-navbar-list-item{
+    display: inline-block;
+    font-weight: bolder;
+    font-size: small;
+    padding: 1px 5px;
+}
+.page-navbar-list-item a:hover{
+    background-color: #FF9900;
+    color: black;
+    border-color: white;
+}
+.page-navbar-list .page-navbar-list-icon{
+    float: right;
+    padding-right:  20px;
+}
+.icon{
+    height: 20px;
+}
+.page-navbar-list-item a{
+    font-weight: 700;
+    padding : 6px 5px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    border-left: 4px solid transparent;
+}

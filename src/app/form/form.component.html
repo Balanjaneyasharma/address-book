@@ -1,0 +1,39 @@
+<form action="" [formGroup]="reactiveForm"   class="page-form" name="addressForm" (ngSubmit)="onSubmit()">
+    <div class="form-element">
+        <label for="name">Name</label>
+        <span class="required-message" *ngIf="name!.invalid&&(name!.touched || formInvalid)"> is Required</span>
+        <input type="text"  formControlName="name" name="Name" id="name" (change)="isDirty = true"   >
+    </div>
+    <div class="form-element">
+        <label for="email">Email</label>
+        <span class="required-message" *ngIf="email!.invalid&&(email!.touched  || formInvalid)"> is Required</span>
+        <input type="email" name="email" id="email"   (change)="isDirty = true"  formControlName="email">
+    </div>
+    <div class="form-elements" >
+        <div class="form-element">
+            <label for="number">Mobile</label>
+            <span class="required-message" *ngIf="mobile!.invalid&&(mobile!.touched || formInvalid)"> is Required</span>
+            <input type="tel" name="mobile" id="number" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  (change)="isDirty = true"   formControlName="mobile">
+        </div>
+        <div class="form-element">
+            <label for="landline">Landline</label>
+            <span class="required-message" *ngIf="landline!.invalid&&(landline!.touched  || formInvalid)"> is Required</span>
+
+            <input type="tel" name="landline" id="landline" onkeypress='return event.charCode >= 48 && event.charCode <= 57'  (change)="isDirty = true"  formControlName="landline">
+        </div>
+    </div>
+    <div class="form-element">
+        <label for="website">Website</label>
+        <span class="required-message" *ngIf="website!.invalid&&(website!.touched || formInvalid)"> is Required</span>
+
+        <input type="url" name="website" id="website"  (change)="isDirty = true"  formControlName="website">
+    </div>
+
+    <div class="form-element">
+        <label for="address">Address</label>
+        <span class="required-message" *ngIf="address!.invalid&&(address!.touched || formInvalid)"> is Required</span>
+
+        <textarea name="address" id="" cols="54" rows="10"  (change)="isDirty = true"   formControlName="address"></textarea>
+    </div>
+    <button class="form-button">{{buttonText | titlecase}}</button>
+</form>
