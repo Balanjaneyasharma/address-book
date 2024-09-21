@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "addressBook-subRouting:build:production"
+              "buildTarget": "addressBook-subRouting:build:production"
             },
             "development": {
-              "browserTarget": "addressBook-subRouting:build:development"
+              "buildTarget": "addressBook-subRouting:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "addressBook-subRouting:build"
+            "buildTarget": "addressBook-subRouting:build"
           }
         },
         "test": {
