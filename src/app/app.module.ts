@@ -9,27 +9,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddressTableComponent } from './address-table/address-table.component';
 import { AddressRowComponent } from './address-row/address-row.component';
 import { AddressDetailsComponent } from './address-details/address-details.component';
-import { HttpClientModule } from  '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from  '@angular/common/http';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    FormComponent,
-    AddressTableComponent,
-    AddressRowComponent,
-    AddressDetailsComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        HomeComponent,
+        FormComponent,
+        AddressTableComponent,
+        AddressRowComponent,
+        AddressDetailsComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { 
   
 }
