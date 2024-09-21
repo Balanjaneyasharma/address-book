@@ -1,16 +1,19 @@
 import { ComponentCanDeactivate } from '../models/component-can-deactivate';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup ,FormControl,Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Address } from '../models/Address';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ViewChild,ElementRef } from '@angular/core';
 import { Observable, map, switchMap, tap } from 'rxjs';
+import { NgIf, TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+    selector: 'app-form',
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.css'],
+    standalone: true,
+    imports: [ReactiveFormsModule, NgIf, TitleCasePipe]
 })
 export class FormComponent implements OnInit,ComponentCanDeactivate,OnDestroy{
   title = 'FormComponent';
@@ -75,18 +78,14 @@ export class FormComponent implements OnInit,ComponentCanDeactivate,OnDestroy{
         });
         
       }
-      else{
-        // const x = new Address(
-        //   this.name?.value,this.email?.value,this.mobile?.value,this.landline?.value,this.website?.value,this.address?.value
-        // );
-        
+      else{        
         this.ds.saveData(this.reactiveForm.value).pipe(
           switchMap((value) => {
             return this.ds.getData().pipe(
               tap((data) => {
                 this.ds.updateObservable(data);
               }),
-              map((data) => {
+              map(() => {
                 return value.id;
               })
             );

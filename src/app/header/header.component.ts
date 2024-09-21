@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css'],
+    standalone: true,
+    imports: [RouterLink, TitleCasePipe]
 })
 export class HeaderComponent {
   title = 'address book';

@@ -1,30 +1,44 @@
-<div class="address-details" *ngIf="data != null">
-    <div>
-        <h2 class="address-name" id = "addressName">{{data.name}}</h2>
-        <p>Email : <span id ="addressEmail"></span>{{data.email}}</p>
-        <p class="reset-margin">Mobile : <span id="addressMobile">{{data.phoneNumber}}</span></p>
-        <p class="reset-margin">Landline:  <span id="addressLandline">{{data.landline}}</span></p>
-        <p>Website: <span id = "addressWebsite">{{data.website}}</span></p>
-        <div class="address-flex">
-            <span>Address: </span>
-        <span id="address" class="address-span">
-            {{data.address}}
-        </span>
+@if (data) {
+    <div class="address-details">
+        <div>
+            <h2 class="address-name" id = "addressName">{{data.name}}</h2>
+            <p>Email : 
+                <span id ="addressEmail">{{data.email}}</span>
+            </p>
+            <p class="reset-margin">
+                Mobile : 
+                <span id="addressMobile">
+                    {{data.phoneNumber}}
+                </span>
+            </p>
+            <p class="reset-margin">
+                Landline:  
+                <span id="addressLandline">
+                    {{data.landline}}
+                </span>
+            </p>
+            <p>
+                Website: 
+                <span id = "addressWebsite">
+                    {{data.website}}
+                </span>
+            </p>
+            <div class="address-flex">
+                <span>Address: </span>
+                <span id="address" class="address-span">
+                    {{data.address}}
+                </span>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <a routerLink="/home/{{data.id}}/edit" class="update-button" >
+                <img src="../../assets/Images/Edit-icon.png" alt="" class="edit-icon"> 
+                <span class="button-text">Edit</span> 
+            </a>
+            <button class="update-button" id="delete" (click)="deleteRecord()">
+                <img src="../../assets/Images/delete1.png" alt="" class="edit-icon"> 
+                <span class="button-text">Delete</span> 
+            </button>
         </div>
     </div>
-    <div class="buttons-container">
-        <a routerLink="/home/{{data.id}}/edit" class="update-button" >
-            <img src="../../assets/Images/Edit-icon.png" alt="" class="edit-icon"> 
-            <span class="button-text">Edit</span> 
-        </a>
-        <button class="update-button" id="delete" (click)="deleteRecord()">
-            <img src="../../assets/Images/delete1.png" alt="" class="edit-icon"> 
-            <span class="button-text">Delete</span> 
-        </button>
-    </div>
-    <!-- <button (click)="goBack()" >back</button> -->
-    <!--
-        (click)="editClick()"
-        (click)="deleteRecord()"
-     --->
-</div>
+}
