@@ -1,12 +1,13 @@
-import { ComponentCanDeactivate } from '../models/component-can-deactivate';
-import { DataService } from '../services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Address } from '../models/Address';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ViewChild,ElementRef } from '@angular/core';
-import { Observable, map, switchMap, tap } from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgIf, TitleCasePipe } from '@angular/common';
+
+import { map, switchMap, tap } from 'rxjs';
+
+import { Address } from '../models/Address';
+import { ComponentCanDeactivate } from '../models/component-can-deactivate';
+import { DataService } from '../services/data.service';
 
 @Component({
     selector: 'app-form',
@@ -15,137 +16,100 @@ import { NgIf, TitleCasePipe } from '@angular/common';
     standalone: true,
     imports: [ReactiveFormsModule, NgIf, TitleCasePipe]
 })
-export class FormComponent implements OnInit,ComponentCanDeactivate,OnDestroy{
+export class FormComponent implements OnInit, ComponentCanDeactivate{
   title = 'FormComponent';
-  formInvalid : boolean = false;
-  id !: string ;
-  isDirty : boolean= false;
-  data !: Address;
-  reactiveForm !: FormGroup
+  id!: string ;
+  address!: Address;
+  reactiveForm!: FormGroup
   buttonText : string = 'add';
-  
-  constructor(private ar : ActivatedRoute,private ds : DataService,private rs : Router) { }
+  initialFormValue: any;
+  isFormSubmitted!: boolean;
 
-  canDeactivate(){
-    return !this.isDirty;
-  }
+  private readonly linkPattern = `((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)`
+  private activatedRoute = inject(ActivatedRoute);
+  private dataService = inject(DataService);
+  private router = inject(Router);
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.createReactiveForm();
-    this.id  = this.ar.snapshot.params['id'];
-    if(this.id){
-      this.getData(this.id);
-    }
+    this.id = this.activatedRoute.snapshot.params['id'];
+    this.id && this.getData(this.id);
+  }
+  
+  canDeactivate(): boolean {
+    let isFormModified: boolean = Object.keys(this.initialFormValue)
+    .some((field) => this.initialFormValue[field] !== this.reactiveForm.value[field]);    
+    return !isFormModified;
   }
 
-  createReactiveForm(){
+  createReactiveForm(): void {
     this.reactiveForm = new FormGroup({
       name : new FormControl( '' , Validators.required),
       email : new FormControl('' ,Validators.required),
       mobile : new FormControl( '' ,[Validators.required,Validators.pattern(/^\d{10}$/)]),
       landline : new FormControl('' ,Validators.required),
-      website : new FormControl('' ,[Validators.required,Validators.pattern("((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)")]),
+      website : new FormControl('' ,[Validators.required,Validators.pattern(this.linkPattern)]),
       address : new FormControl('' ,Validators.required)
     });
   }
 
-  getData(id : string){
+  getData(id : string): void {
     this.buttonText = 'update';
-    this.ds.getSingleData(id).subscribe((value)=>{
-      this.data = value;
+    this.dataService.getSingleData(id).subscribe((value)=>{
+      this.address = value;
       this.setFormValues();
+      this.initialFormValue = structuredClone(this.reactiveForm.value);
     });
   }
 
-  onSubmit(){
-    this.isDirty = false;
-    if(this.reactiveForm.valid){
-      console.log(this.reactiveForm);
-      this.formInvalid = false;
-      if(this.data){
-        this.data.name = this.name?.value;
-        this.data.email = this.email?.value;
-        this.data.phoneNumber = this.mobile?.value;
-        this.data.landline = this.landline?.value;
-        this.data.website = this.website?.value;
-        this.data.address= this.address?.value;
+  onSubmit(): void {
+    this.isFormSubmitted = true;
 
-        this.ds.updateData(this.data).pipe(
-          switchMap(()=>this.ds.getData())
-        ).subscribe((value)=>{
-          this.ds.updateObservable(value);
-          this.rs.navigate([`/home/${this.data.id}/view`]);
-        });
-        
-      }
-      else{        
-        this.ds.saveData(this.reactiveForm.value).pipe(
-          switchMap((value) => {
-            return this.ds.getData().pipe(
-              tap((data) => {
-                this.ds.updateObservable(data);
-              }),
-              map(() => {
-                return value.id;
-              })
-            );
-          })
-        ).subscribe((url) => {
-          this.rs.navigate(['/home/'+url+'/view']);
-        });
+    if(this.reactiveForm.invalid) return;
 
-      }
-    }
-    else{
-      this.formInvalid = true;
+    const formValue = this.reactiveForm.value;
+    if(this.address){
+      this.address.name = formValue.name;
+      this.address.email = formValue.email;
+      this.address.phoneNumber = formValue.mobile;
+      this.address.landline = formValue.landline;
+      this.address.website = formValue.website;
+      this.address.address= formValue.address;
+
+      this.dataService.updateData(this.address).pipe(
+        switchMap(()=>this.dataService.getData())
+      ).subscribe((value)=>{
+        this.dataService.updateObservable(value);
+        this.router.navigate([`/home/${this.address.id}/view`]);
+      });
+      
+    } else {        
+      this.dataService.saveData(this.reactiveForm.value).pipe(
+        switchMap((value) => {
+          return this.dataService.getData().pipe(
+            tap((data) => {
+              this.dataService.updateObservable(data);
+            }),
+            map(() => {
+              return value.id;
+            })
+          );
+        })
+      ).subscribe((url) => {
+        this.router.navigate(['/home/'+url+'/view']);
+      });
     }
   }
 
-  setFormValues(){
+  setFormValues(): void {
     this.reactiveForm.patchValue({
-      name : this.data?.name,
-      email : this.data?.email,
-      mobile : this.data?.phoneNumber,
-      landline : this.data?.landline,
-      website : this.data?.website,
-      address : this.data?.address
+      name : this.address?.name,
+      email : this.address?.email,
+      mobile : this.address?.phoneNumber,
+      landline : this.address?.landline,
+      website : this.address?.website,
+      address : this.address?.address
     });
   }
 
-  get name(){
-    return this.reactiveForm.get('name');
-  }
-  get email(){
-    return this.reactiveForm.get('email');
-  }
-  get mobile(){
-    return this.reactiveForm.get('mobile');
-  }
-  get landline(){
-    return this.reactiveForm.get('landline');
-  }
-  get website(){
-    return this.reactiveForm.get('website');
-  }
-  get address(){
-    return this.reactiveForm.get('address');
-  }
-
-  ngOnDestroy(): void {
-    
-  }
 }
-/*
-// this.ds.saveData(x);
-        // this.ds.saveData(x).subscribe((value)=>{
-        //   this.ds.getData().subscribe((data)=>{
-        //     this.ds.updateObservable(data);
-        //     this.rs.navigate(['/home/details/'+value.id])
-        //   });
-        // })
-        // this.ds.saveData(x).pipe(
-        //   switchMap((p)=>this.ds.getData())
-        // ).subscribe((value)=>{
-        //   this.ds.updateObservable(value);
-        //   this.rs.navigate(['/home/details/'+x.id]);
-        // })* */

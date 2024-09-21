@@ -12,6 +12,5 @@ import { RouterOutlet } from '@angular/router';
     imports: [AddressTableComponent, RouterOutlet]
 })
 export class HomeComponent {
-  constructor(){
-  }
+  
 }

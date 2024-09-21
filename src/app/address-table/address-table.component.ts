@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 
@@ -14,7 +14,7 @@ import { AddressRowComponent } from '../address-row/address-row.component';
     imports: [NgIf, NgFor, NgClass, AddressRowComponent, RouterLink]
 })
 export class AddressTableComponent implements OnInit {
-  title = '';
+
   addresses : Address[] =[];
 
   private dataService = inject(DataService);

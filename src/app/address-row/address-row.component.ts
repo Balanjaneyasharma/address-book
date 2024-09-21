@@ -11,6 +11,8 @@ import { Address } from '../models/Address';
     imports: [RouterLinkActive, RouterLink]
 })
 export class AddressRowComponent{
+
   @Input({required: true}) data !:  Address;
+  
 }
 

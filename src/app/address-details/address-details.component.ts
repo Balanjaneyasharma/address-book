@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
 
 import { switchMap } from 'rxjs';
@@ -14,35 +14,32 @@ import { Address } from '../models/Address';
     standalone: true,
     imports: [NgIf, RouterLink]
 })
-export class AddressDetailsComponent implements OnInit,OnDestroy{
+export class AddressDetailsComponent implements OnInit {
   readonly title = 'AddressDetailsComponent'
   data !: Address;
   
-  constructor(private ar : ActivatedRoute,private ds : DataService,private rs : Router){}
+  private activatedRoute = inject(ActivatedRoute);
+  private dataService = inject(DataService);
+  private router = inject(Router)
 
-  ngOnInit(){
+  ngOnInit(): void {
     this.getId();
   }
 
-  getId() {
-    this.ar.paramMap.pipe(
-      switchMap(p => this.ds.getSingleData(p.get('id') as string))
+  getId(): void {
+    this.activatedRoute.paramMap.pipe(
+      switchMap(p => this.dataService.getSingleData(p.get('id') as string))
     ).subscribe(value => {
       this.data = value;
     });
   }
 
-
-  deleteRecord(){
-    this.ds.deleteData(this.data.id).pipe(
-      switchMap(()=>this.ds.getData())
+  deleteRecord(): void {
+    this.dataService.deleteData(this.data.id).pipe(
+      switchMap(()=>this.dataService.getData())
     ).subscribe((value)=>{
-      this.ds.updateObservable(value);
-      this.rs.navigate(['/']);
+      this.dataService.updateObservable(value);
+      this.router.navigate(['/']);
     });
-  }
-
-  ngOnDestroy(): void {
-    
   }
 }

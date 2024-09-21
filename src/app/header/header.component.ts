@@ -10,8 +10,7 @@ import { TitleCasePipe } from '@angular/common';
     imports: [RouterLink, TitleCasePipe]
 })
 export class HeaderComponent {
-  title = 'address book';
 
-  constructor(){
-  }
-}
+  readonly title = 'address book';
+
+} 

@@ -5,12 +5,10 @@
     border-bottom : 2px solid #C8C8C8;
     cursor: pointer;
     color:black;
-    /* background-color: white; */
 }
 
 .address:hover,.focus{
     background-color: #CEE7F2;
-    /* background-color: #3E5E77; */
 }
 .address > p{
     margin: 0px;
@@ -24,7 +22,6 @@
     font-size: 23px;
     margin: 0px;
     font-weight: 350;
-    /* font-family: 'Noto Sans', sans-serif; */
     font-family: 'Segoe UI',sans-serif;
 }
 .address-contact{
