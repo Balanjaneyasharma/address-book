@@ -1,27 +1,36 @@
-# AddressBookSubRouting
+# 📒 Address Book App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+A simple Angular application that allows users to **add**, **update**, and **delete** addresses. It uses a mock API as the backend to simulate real data operations.
 
-## Development server
+## 🛠 Tech Stack
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Frontend**: Angular  
+- **Backend**: Mock API (e.g., JSON Server or custom Node.js mock server)
 
-## Code scaffolding
+## 🚀 Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- View list of addresses  
+- Add new address  
+- Edit existing address  
+- Delete address  
 
-## Build
+## 📦 Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Clone the repository
 
-## Running unit tests
+```bash
+git clone https://github.com/your-username/address-book.git
+cd address-book
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Install dependencies
 
-## Running end-to-end tests
+``` bash
+npm install
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Start the Angular app
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+ng serve -o
+```
