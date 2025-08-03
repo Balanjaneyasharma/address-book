@@ -19,7 +19,7 @@ A simple Angular application that allows users to **add**, **update**, and **del
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/address-book.git
+git clone https://github.com/Balanjaneyasharma/address-book.git
 cd address-book
 ```
 
